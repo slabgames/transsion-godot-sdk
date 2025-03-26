@@ -1,17 +1,97 @@
 [versions]
+adapterAdmob = "6.4.59.2"
+adapterFacebook = "6.3.27.2"
+admobLib = "2.9.7.2"
+adsSdk = "6.5.0.6"
 agp = "8.9.0"
+annotation = "1.9.1"
+applovin = "13.1.0.1"
+applovinSdk = "13.1.0"
+audienceNetworkSdk = "6.19.0"
+comAnythinkSdkAdapterVungle3 = "6.3.27"
+core = "1.15.0"
+facebook = "6.19.0.1"
+inmobi = "10.8.2.0"
+inmobiAdsKotlin = "10.8.2"
+ironsource = "8.7.0.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 appcompat = "1.7.0"
+localbroadcastmanager = "1.1.0"
 material = "1.12.0"
+mediationsdk = "8.7.0"
+mintegral = "16.9.51.0"
+newinterstitial = "16.6.51"
+pangle = "6.5.0.6.0"
+playServicesAds = "24.1.0"
+playServicesAdsIdentifier = "18.2.0"
+playServicesAdsIdentifierVersion = "18.0.1"
+playServicesAppset = "16.1.0"
+playServicesBasement = "18.6.0"
+playServicesBasementVersion = "18.1.0"
+recyclerview = "1.4.0"
+reward = "16.8.61"
+unity = "4.14.0.0"
+unityAds = "4.14.0"
+vungle = "7.4.3.1"
+vungleVungleAdsVersion = "7.4.3"
 
 [libraries]
+adapter-admob = { module = "com.anythink.sdk:adapter-admob", version.ref = "adapterAdmob" }
+adapter-applovin = { module = "com.anythink.sdk:adapter-applovin", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-facebook = { module = "com.anythink.sdk:adapter-facebook", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-facebook-v63272 = { module = "com.anythink.sdk:adapter-facebook", version.ref = "adapterFacebook" }
+adapter-inmobi = { module = "com.anythink.sdk:adapter-inmobi", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-ironsource = { module = "com.anythink.sdk:adapter-ironsource", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-mintegral-nonchina = { module = "com.anythink.sdk:adapter-mintegral-nonchina", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-pangle-nonchina = { module = "com.anythink.sdk:adapter-pangle-nonchina", version.ref = "comAnythinkSdkAdapterVungle3" }
+adapter-unityads = { module = "com.anythink.sdk:adapter-unityads", version.ref = "comAnythinkSdkAdapterVungle3" }
+admob-lib = { module = "com.cloud.hisavana.sdk.mediation:admob-lib", version.ref = "admobLib" }
+ads-sdk = { module = "com.pangle.global:ads-sdk", version.ref = "adsSdk" }
+annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
+applovin = { module = "com.google.ads.mediation:applovin", version.ref = "applovin" }
+applovin-lib = { module = "com.cloud.hisavana.sdk.mediation:applovin-lib", version.ref = "admobLib" }
+applovin-sdk = { module = "com.applovin:applovin-sdk", version.ref = "applovinSdk" }
+audience-network-sdk = { module = "com.facebook.android:audience-network-sdk", version.ref = "audienceNetworkSdk" }
+com-anythink-sdk-adapter-vungle4 = { module = "com.anythink.sdk:adapter-vungle", version.ref = "comAnythinkSdkAdapterVungle3" }
+com-vungle-vungle-ads2 = { module = "com.vungle:vungle-ads", version.ref = "vungleVungleAdsVersion" }
+core = { module = "androidx.core:core", version.ref = "core" }
+facebook = { module = "com.google.ads.mediation:facebook", version.ref = "facebook" }
+fan-lib = { module = "com.cloud.hisavana.sdk.mediation:fan-lib", version.ref = "admobLib" }
+inmobi = { module = "com.google.ads.mediation:inmobi", version.ref = "inmobi" }
+inmobi-ads-kotlin = { module = "com.inmobi.monetization:inmobi-ads-kotlin", version.ref = "inmobiAdsKotlin" }
+inmobi-lib = { module = "com.cloud.hisavana.sdk.mediation:inmobi-lib", version.ref = "admobLib" }
+ironsource = { module = "com.google.ads.mediation:ironsource", version.ref = "ironsource" }
+ironsource-lib = { module = "com.cloud.hisavana.sdk.mediation:ironsource-lib", version.ref = "admobLib" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+mbbanner = { module = "com.mbridge.msdk.oversea:mbbanner", version.ref = "newinterstitial" }
+mbbid = { module = "com.mbridge.msdk.oversea:mbbid", version.ref = "newinterstitial" }
+mbnative = { module = "com.mbridge.msdk.oversea:mbnative", version.ref = "newinterstitial" }
+mbnativeadvanced = { module = "com.mbridge.msdk.oversea:mbnativeadvanced", version.ref = "newinterstitial" }
+mbsplash = { module = "com.mbridge.msdk.oversea:mbsplash", version.ref = "newinterstitial" }
+mediationsdk = { module = "com.ironsource.sdk:mediationsdk", version.ref = "mediationsdk" }
+mintegral = { module = "com.google.ads.mediation:mintegral", version.ref = "mintegral" }
+newinterstitial = { module = "com.mbridge.msdk.oversea:newinterstitial", version.ref = "newinterstitial" }
+pangle = { module = "com.google.ads.mediation:pangle", version.ref = "pangle" }
+pangle-lib = { module = "com.cloud.hisavana.sdk.mediation:pangle-lib", version.ref = "admobLib" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
+play-services-ads-identifier = { module = "com.google.android.gms:play-services-ads-identifier", version.ref = "playServicesAdsIdentifier" }
+play-services-ads-identifier-v1801 = { module = "com.google.android.gms:play-services-ads-identifier", version.ref = "playServicesAdsIdentifierVersion" }
+play-services-appset = { module = "com.google.android.gms:play-services-appset", version.ref = "playServicesAppset" }
+play-services-basement = { module = "com.google.android.gms:play-services-basement", version.ref = "playServicesBasement" }
+play-services-basement-v1810 = { module = "com.google.android.gms:play-services-basement", version.ref = "playServicesBasementVersion" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+reward = { module = "com.mbridge.msdk.oversea:reward", version.ref = "reward" }
+unity = { module = "com.google.ads.mediation:unity", version.ref = "unity" }
+unity-ads = { module = "com.unity3d.ads:unity-ads", version.ref = "unityAds" }
+unity-lib = { module = "com.cloud.hisavana.sdk.mediation:unity-lib", version.ref = "admobLib" }
+vungle = { module = "com.google.ads.mediation:vungle", version.ref = "vungle" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

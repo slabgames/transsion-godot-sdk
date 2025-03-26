@@ -9,6 +9,36 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+
+        maven ( url = "https://mvn.shalltry.com/repository/maven-public/")
+        maven( url = "https://mvn.shalltry.com/repository/game-releases/" )
+        maven ( url = "https://mvn.shalltry.com/repository/ad-releases/" )
+
+        maven(
+            url= "https://jfrog.anythinktech.com/artifactory/overseas_sdk"
+        )
+
+
+        //Vungle
+        maven(
+            url= "https://s01.oss.sonatype.org/content/groups/staging/"
+        )
+
+        //Ironsource
+        maven(
+            url= "https://android-sdk.is.com/"
+        )
+
+        //Pangle
+        maven(
+            url= "https://artifact.bytedance.com/repository/pangle/"
+        )
+
+        //Mintegral
+        maven(
+            url= "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea/"
+        )
+        //------The addresses of dependent repositories have been configured.----------
     }
 }
 dependencyResolutionManagement {
