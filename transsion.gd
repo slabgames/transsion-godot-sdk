@@ -35,36 +35,91 @@ func _ready():
 		push_warning('GodotTranssion plugin not found!')
 		
 	
-	_transsion.connect("on_init_completed",self,"_on_start_connection_success")
-	_transsion.connect("on_init_failed",self,"_on_query_purchases_response")
-	_transsion.connect("on_plugin_error",self,"_on_handle_purchase")
-	_transsion.connect("on_appopen_loaded",self,"_on_acknowledge_success")
-	_transsion.connect("on_appopen_showed",self,"_on_consume_success")
-	_transsion.connect("on_appopen_closed",self,"_on_product_details_response")
-	_transsion.connect("on_appopen_clicked",self,"_on_product_details_response")
-	_transsion.connect("on_rewarded_showed",self,"_on_product_details_response")
-	_transsion.connect("on_rewarded_closed",self,"_on_product_details_response")
-	_transsion.connect("on_rewarded_clicked",self,"_on_product_details_response")
-	_transsion.connect("on_rewarded_loaded",self,"_on_product_details_response")
-	_transsion.connect("on_rewarded",self,"_on_product_details_response")
-	_transsion.connect("on_interstitial_loaded",self,"_on_product_details_response")
-	_transsion.connect("on_interstitial_showed",self,"_on_product_details_response")
-	_transsion.connect("on_interstitial_closed",self,"_on_product_details_response")
-	_transsion.connect("on_interstitial_clicked",self,"_on_product_details_response")
-	_transsion.connect("on_banner_loaded",self,"_on_product_details_response")
-	_transsion.connect("on_banner_showed",self,"_on_product_details_response")
-	_transsion.connect("on_banner_closed",self,"_on_product_details_response")
-	
+	_transsion.connect("on_init_completed",self,"on_init_completed")
+	_transsion.connect("on_init_failed",self,"on_init_failed")
+	_transsion.connect("on_plugin_error",self,"on_plugin_error")
+	_transsion.connect("on_appopen_loaded",self,"on_appopen_loaded")
+	_transsion.connect("on_appopen_showed",self,"on_appopen_showed")
+	_transsion.connect("on_appopen_closed",self,"on_appopen_closed")
+	_transsion.connect("on_appopen_clicked",self,"on_appopen_clicked")
+	_transsion.connect("on_rewarded_showed",self,"on_rewarded_showed")
+	_transsion.connect("on_rewarded_closed",self,"on_rewarded_closed")
+	_transsion.connect("on_rewarded_clicked",self,"on_rewarded_clicked")
+	_transsion.connect("on_rewarded_loaded",self,"on_rewarded_loaded")
+	_transsion.connect("on_rewarded",self,"on_rewarded")
+	_transsion.connect("on_interstitial_loaded",self,"on_interstitial_loaded")
+	_transsion.connect("on_interstitial_showed",self,"on_interstitial_showed")
+	_transsion.connect("on_interstitial_closed",self,"on_interstitial_closed")
+	_transsion.connect("on_interstitial_clicked",self,"on_interstitial_clicked")
+	_transsion.connect("on_banner_loaded",self,"on_banner_loaded")
+	_transsion.connect("on_banner_showed",self,"on_banner_showed")
+	_transsion.connect("on_banner_closed",self,"on_banner_closed")
 
-	
+# =================================== LISTENER ===========================
+func on_init_completed():
+	emit_signal("on_init_completed")
 
-func init(licenseKey: String) -> void:
+func on_init_failed(message):
+	emit_signal("on_init_failed",message)
+
+func on_plugin_error(message):
+	emit_signal("on_plugin_error",message)
+
+func on_appopen_loaded():
+	emit_signal("on_appopen_loaded")
+
+func on_appopen_showed():
+	emit_signal("on_appopen_showed")
+
+func on_appopen_closed():
+	emit_signal("on_appopen_closed")
+
+func on_appopen_clicked():
+	emit_signal("on_appopen_clicked")
+
+func on_rewarded_showed():
+	emit_signal("on_rewarded_showed")
+
+func on_rewarded_closed():
+	emit_signal("on_rewarded_closed")
+
+func on_rewarded_clicked():
+	emit_signal("on_rewarded_clicked")
+
+func on_rewarded_loaded():
+	emit_signal("on_rewarded_loaded")
+
+func on_interstitial_loaded():
+	emit_signal("on_interstitial_loaded")
+
+func on_interstitial_showed():
+	emit_signal("on_interstitial_showed")
+
+func on_interstitial_closed():
+	emit_signal("on_interstitial_closed")
+
+func on_interstitial_clicked():
+	emit_signal("on_interstitial_clicked")
+
+func on_banner_loaded():
+	emit_signal("on_banner_loaded")
+
+func on_banner_showed():
+	emit_signal("on_banner_showed")
+
+func on_banner_closed():
+	emit_signal("on_banner_closed")
+
+
+func init() -> void:
 	if _transsion != null:
-		_transsion.init(licenseKey)
-		print('Transsion plugin inited!')
-		
+		_transsion.init()
+
+
 func isInitialized()->bool:
 	if _transsion != null:
+		if _transsion.isInitialized():
+			print("Transsion SDK inited")
 		return _transsion.isInitialized();
 	return false
 
@@ -83,7 +138,7 @@ func destroyBanner()->void:
 func setBannerLocation(location=TOP)->void:
 	if _transsion != null:
 		_transsion.setBannerLocation(location)
-		
+
 func loadInterstitial()->void:
 	if _transsion != null:
 		_transsion.loadInterstitial()
@@ -99,7 +154,7 @@ func destroyInterstitial()->void:
 func loadRewarded()->void:
 	if _transsion != null:
 		_transsion.loadRewarded()
-		
+
 func showRewarded()->void:
 	if _transsion != null:
 		_transsion.showRewarded()
@@ -111,7 +166,7 @@ func destroyRewarded()->void:
 func loadAppOpen()->void:
 	if _transsion != null:
 		_transsion.loadAppOpen()
-		
+
 func showAppOpen()->void:
 	if _transsion != null:
 		_transsion.showAppOpen()
@@ -120,21 +175,4 @@ func destroyAppOpen()->void:
 	if _transsion != null:
 		_transsion.showAppOpen()
 
-# =================================== LISTENER ===========================
-func _on_start_connection_success():
-	emit_signal("on_start_connection_success")
 
-func _on_query_purchases_response(purchaseIDs:Array):
-	emit_signal("on_query_purchases_response",purchaseIDs)
-	
-func _on_handle_purchase(productId:String):
-	emit_signal("on_handle_purchase",productId)
-	
-func _on_acknowledge_success(purchaseId:String):
-	emit_signal("on_acknowledge_success",purchaseId)
-	
-func _on_consume_success(purchaseId:String):
-	emit_signal("on_consume_success",purchaseId)
-
-func _on_product_details_response(productDetails:Array):
-	emit_signal("on_product_details_response",productDetails)
