@@ -76,12 +76,14 @@ public class GodotTranssion extends GodotPlugin  {
         // Rewarded
         signals.add(new SignalInfo("on_rewarded_showed"));
         signals.add(new SignalInfo("on_rewarded_loaded"));
+        signals.add(new SignalInfo("on_rewarded_load_failed", String.class));
         signals.add(new SignalInfo("on_rewarded_closed"));
         signals.add(new SignalInfo("on_rewarded_clicked"));
         signals.add(new SignalInfo("on_rewarded"));
 
         // Interstitial
         signals.add(new SignalInfo("on_interstitial_loaded"));
+        signals.add(new SignalInfo("on_interstitial_load_failed", String.class));
         signals.add(new SignalInfo("on_interstitial_showed"));
         signals.add(new SignalInfo("on_interstitial_closed"));
         signals.add(new SignalInfo("on_interstitial_clicked"));
@@ -94,6 +96,7 @@ public class GodotTranssion extends GodotPlugin  {
 
         // App Open
         signals.add(new SignalInfo("on_appopen_loaded"));
+        signals.add(new SignalInfo("on_appopen_load_failed", String.class));
         signals.add(new SignalInfo("on_appopen_showed"));
         signals.add(new SignalInfo("on_appopen_closed"));
         signals.add(new SignalInfo("on_appopen_clicked"));
@@ -251,7 +254,7 @@ public class GodotTranssion extends GodotPlugin  {
                     //Do not initiate retry requests directly using this API as it will generate many useless requests and may lead to high app latency.
                     //If a retry is required, retry at the appropriate time or limit the number of retries.
                     Log.d(TAG, "onAdFailedToLoad: Failed to load the interstitial ad. Error code:" + i + ". Cause:" + s);
-                    emitSignal("on_plugin_error",s);
+                    emitSignal("on_interstitial_load_failed",s);
                 }
             };
 
@@ -367,7 +370,7 @@ public class GodotTranssion extends GodotPlugin  {
                 //Do not initiate retry requests directly using this API as it will generate many useless requests and may lead to high app latency.
                 //If a retry is required, retry at the appropriate time or limit the number of retries.
                 Log.d(TAG, "onAdFailedToLoad: Failed to preload the rewarded ad. Error code:" + i + ". Cause:" + s);
-                emitSignal("on_plugin_error",s);
+                emitSignal("on_rewarded_load_failed",s);
             }
         };
         //It is recommended that the ad be preloaded after a successful initialization.
@@ -405,7 +408,7 @@ public class GodotTranssion extends GodotPlugin  {
                 @Override
                 public void onAdError(int errorCode, String errorMsg) {
                     Log.e(TAG, "Loading of open-screen ads failed: error code = "+errorCode+", error message = "+errorMsg);
-                    emitSignal("on_plugin_error",errorMsg);
+                    emitSignal("on_appopen_load_failed",errorMsg);
                 }
 
                 @Override
