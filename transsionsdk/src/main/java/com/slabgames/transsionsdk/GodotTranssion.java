@@ -71,6 +71,7 @@ public class GodotTranssion extends GodotPlugin  {
 
         // Rewarded
         signals.add(new SignalInfo("on_rewarded_showed"));
+        signals.add(new SignalInfo("on_rewarded_loaded"));
         signals.add(new SignalInfo("on_rewarded_closed"));
         signals.add(new SignalInfo("on_rewarded_clicked"));
         signals.add(new SignalInfo("on_rewarded"));
