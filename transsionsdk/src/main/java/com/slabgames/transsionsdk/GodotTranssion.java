@@ -2,6 +2,7 @@ package com.slabgames.transsionsdk;
 
 
 import android.app.Activity;
+import android.util.ArraySet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -27,10 +28,10 @@ import com.transsion.gamead.InitListener;
 import com.transsion.gamead.OnOpenAppLoadListener;
 import com.transsion.gamead.OnOpenAppShowListener;
 import com.transsion.gamead.constant.InitState;
-import com.transsion.gamead.impl.GameAd;
 import com.transsion.gamead.impl.TGBannerView;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class GodotTranssion extends GodotPlugin  {
     private static final String TAG = "GODOT-TRANSSION";
@@ -60,6 +61,42 @@ public class GodotTranssion extends GodotPlugin  {
         return super.onMainCreate(activity);
     }
 
+    @NonNull
+    @Override
+    public Set<SignalInfo> getPluginSignals() {
+        Set<SignalInfo> signals = new ArraySet<>();
+
+        // General
+        signals.add(new SignalInfo("on_plugin_error", String.class));
+
+        // Rewarded
+        signals.add(new SignalInfo("on_rewarded_showed"));
+        signals.add(new SignalInfo("on_rewarded_closed"));
+        signals.add(new SignalInfo("on_rewarded_clicked"));
+        signals.add(new SignalInfo("on_rewarded"));
+
+        // Interstitial
+        signals.add(new SignalInfo("on_interstitial_loaded"));
+        signals.add(new SignalInfo("on_interstitial_showed"));
+        signals.add(new SignalInfo("on_interstitial_closed"));
+        signals.add(new SignalInfo("on_interstitial_clicked"));
+
+
+        // Banner
+        signals.add(new SignalInfo("on_banner_loaded"));
+        signals.add(new SignalInfo("on_banner_showed"));
+        signals.add(new SignalInfo("on_banner_closed"));
+
+        // App Open
+        signals.add(new SignalInfo("on_appopen_loaded"));
+        signals.add(new SignalInfo("on_appopen_showed"));
+        signals.add(new SignalInfo("on_appopen_closed"));
+        signals.add(new SignalInfo("on_appopen_clicked"));
+
+
+        return signals;
+    }
+
     @UsedByGodot
     public void init(){
         AdInitializer.init(
@@ -87,6 +124,7 @@ public class GodotTranssion extends GodotPlugin  {
                 } else if (state == InitState.INIT_STATE_ERROR) {
                     //Most initialization failures are caused by incorrect configuration file locations.
                     Log.d(TAG, "Initialization failed. Cause:" + message);
+                    emitSignal("on_plugin_error",message);
                 }
             }
         });
@@ -111,11 +149,13 @@ public class GodotTranssion extends GodotPlugin  {
                 @Override
                 public void onAdFailedToLoad(int code, String message) {
                     Log.i(TAG, "Banner ad loading failed. Error code:" + code + "; error message:" + message);
+                    emitSignal("on_plugin_error",message);
                 }
 
                 @Override
                 public void onAdOpened() {
                     Log.i(TAG, "Banner onAdOpened");
+                    emitSignal("on_banner_showed");
                 }
 
                 @Override
@@ -126,12 +166,15 @@ public class GodotTranssion extends GodotPlugin  {
                 @Override
                 public void onAdLoaded() {
                     Log.i(TAG, "Banner onAdLoaded");
+                    emitSignal("on_banner_loaded");
+
                 }
 
                 @Override
                 public void onAdClosed() {
                     Log.i(TAG, "Banner onAdClosed");
                     //This callback exists for some ads.
+                    emitSignal("on_banner_closed");
                 }
             });
             //Load the ad. (This method will automatically add the ad to the layout by default and display it in full at the bottom.)
@@ -192,6 +235,7 @@ public class GodotTranssion extends GodotPlugin  {
                 @Override
                 public void onAdLoaded() {
                     Log.d(TAG, "onAdLoaded: The interstitial ad has been preloaded and is ready for display.");
+                    emitSignal("on_interstitial_loaded");
                     //Do not directly call the display API in the callback of successful preloading. The preloading logic should be separated from the display logic.
                 }
 
@@ -201,6 +245,7 @@ public class GodotTranssion extends GodotPlugin  {
                     //Do not initiate retry requests directly using this API as it will generate many useless requests and may lead to high app latency.
                     //If a retry is required, retry at the appropriate time or limit the number of retries.
                     Log.d(TAG, "onAdFailedToLoad: Failed to load the interstitial ad. Error code:" + i + ". Cause:" + s);
+                    emitSignal("on_plugin_error",s);
                 }
             };
 
@@ -220,21 +265,25 @@ public class GodotTranssion extends GodotPlugin  {
                     @Override
                     public void onShow() {
                         Log.d(TAG, "The interstitial ad is displayed.");
+                        emitSignal("on_interstitial_showed");
                     }
 
                     @Override
                     public void onShowFailed(int i, String s) {
                         Log.d(TAG, "Failed to display the interstitial ad. Error code:"+i+". Error message="+s);
+                        emitSignal("on_plugin_error",s);
                     }
 
                     @Override
                     public void onClose() {
                         Log.d(TAG, "The interstitial ad is closed.");
+                        emitSignal("on_interstitial_closed");
                     }
 
                     @Override
                     public void onClick() {
                         Log.d(TAG, "The interstitial ad has been clicked.");
+                        emitSignal("on_interstitial_clicked");
                     }
 
                     @Override
@@ -264,26 +313,31 @@ public class GodotTranssion extends GodotPlugin  {
             @Override
             public void onUserEarnedReward(GameRewardItem rewardItem) {
                 Log.i(TAG, "Reward onUserEarnedReward " + rewardItem.getType() + " " + rewardItem.getAmount());
+                emitSignal("on_rewarded");
             }
 
             @Override
             public void onShow() {
                 Log.i(TAG, "The rewarded ad is displayed.");
+                emitSignal("on_rewarded_showed");
             }
 
             @Override
             public void onShowFailed(int code, String message) {
                 Log.i(TAG, "Failed to display the rewarded ad. Error code:"+code+". Error message:"+message);
+                emitSignal("on_plugin_error",message);
             }
 
             @Override
             public void onClose() {
                 Log.d(TAG, "The rewarded ad is closed.");
+                emitSignal("on_rewarded_closed");
             }
 
             @Override
             public void onClick() {
                 Log.i(TAG, "The rewarded ad has been clicked.");
+                emitSignal("on_rewarded_clicked");
             }
 
             @Override
@@ -298,6 +352,7 @@ public class GodotTranssion extends GodotPlugin  {
             public void onAdLoaded() {
                 Log.d(TAG, "onAdLoaded: The rewarded ad has been preloaded successfully and is ready for display.");
                 //Do not directly call the display API in the callback of successful preloading. The preloading logic should be separated from the display logic.
+                emitSignal("on_rewarded_loaded");
             }
 
             @Override
@@ -306,6 +361,7 @@ public class GodotTranssion extends GodotPlugin  {
                 //Do not initiate retry requests directly using this API as it will generate many useless requests and may lead to high app latency.
                 //If a retry is required, retry at the appropriate time or limit the number of retries.
                 Log.d(TAG, "onAdFailedToLoad: Failed to preload the rewarded ad. Error code:" + i + ". Cause:" + s);
+                emitSignal("on_plugin_error",s);
             }
         };
         //It is recommended that the ad be preloaded after a successful initialization.
@@ -339,15 +395,17 @@ public class GodotTranssion extends GodotPlugin  {
     public void loadAppOpen()
     {
         mActivity.runOnUiThread(() -> {
-            AdHelper.loadAppOpenAd(this,new OnOpenAppLoadListener() {
+            AdHelper.loadAppOpenAd(mActivity,new OnOpenAppLoadListener() {
                 @Override
                 public void onAdError(int errorCode, String errorMsg) {
-                    Log.e(TAG, "Loading of open-screen ads failed: error code = "+errorCode+", error message = "+errorMsg");
+                    Log.e(TAG, "Loading of open-screen ads failed: error code = "+errorCode+", error message = "+errorMsg);
+                    emitSignal("on_plugin_error",errorMsg);
                 }
 
                 @Override
                 public void onAdLoaded() {
                     Log.d(TAG, "Open screen advertisement loading completed");
+                    emitSignal("on_appopen_loaded");
                 }
             });
         });
@@ -363,21 +421,25 @@ public class GodotTranssion extends GodotPlugin  {
                     @Override
                     public void onAdError(int errorCode, String errorMsg) {
                         Log.e(TAG, "Open screen ad display error: error code = "+errorCode+", error message = "+errorMsg);
+                        emitSignal("on_plugin_error",errorMsg);
                     }
 
                     @Override
                     public void onAdShowed() {
                         Log.d("GAD_Open","Open screen ad displayed successfully");
+                        emitSignal("on_appopen_showed");
                     }
 
                     @Override
                     public void onAdDismissed() {
                         Log.d("GAD_Open","Open screen advertising closed");
+                        emitSignal("on_appopen_closed");
                     }
 
                     @Override
                     public void onAdClicked() {
                         Log.d("GAD_Open","Open screen ad click");
+                        emitSignal("on_appopen_clicked");
                     }
                 });
             }else{
@@ -399,7 +461,7 @@ public class GodotTranssion extends GodotPlugin  {
         destroyInterstitial();
         destroyRewarded();
         destroyAppOpen();
-        
+
         super.onMainDestroy();
     }
 }
