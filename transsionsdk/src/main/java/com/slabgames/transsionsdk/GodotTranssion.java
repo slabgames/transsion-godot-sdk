@@ -69,6 +69,10 @@ public class GodotTranssion extends GodotPlugin  {
         // General
         signals.add(new SignalInfo("on_plugin_error", String.class));
 
+        signals.add(new SignalInfo("on_init_completed"));
+        signals.add(new SignalInfo("on_init_failed", String.class));
+
+
         // Rewarded
         signals.add(new SignalInfo("on_rewarded_showed"));
         signals.add(new SignalInfo("on_rewarded_loaded"));
@@ -122,10 +126,11 @@ public class GodotTranssion extends GodotPlugin  {
             public void onStateChange(int state, String message) {
                 if (state == InitState.INIT_STATE_COMPLETE) {
                     Log.d(TAG, "Initialization successful. It is recommended to preload interstitial and rewarded ads here.");
+                    emitSignal("on_init_completed",message);
                 } else if (state == InitState.INIT_STATE_ERROR) {
                     //Most initialization failures are caused by incorrect configuration file locations.
                     Log.d(TAG, "Initialization failed. Cause:" + message);
-                    emitSignal("on_plugin_error",message);
+                    emitSignal("on_init_failed",message);
                 }
             }
         });
@@ -308,7 +313,7 @@ public class GodotTranssion extends GodotPlugin  {
     }
 
     @UsedByGodot
-    public void loadRewarded()
+        public void loadRewarded()
     {
         _rewardedListener = new GameAdRewardShowListener() {
             @Override
