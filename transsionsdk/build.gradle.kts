@@ -3,6 +3,10 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        create("release") {
+        }
+    }
     namespace = "com.slabgames.transsionsdk"
     compileSdk = 35
 
