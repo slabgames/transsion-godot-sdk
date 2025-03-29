@@ -35,11 +35,11 @@ android {
 dependencies {
     compileOnly(files("libs/godot-lib.3.6.stable.release.aar")) // godot lib
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+//    implementation(libs.appcompat)
+//    implementation(libs.material)
+//    testImplementation(libs.junit)
+//    androidTestImplementation(libs.ext.junit)
+//    androidTestImplementation(libs.espresso.core)
 
     //Note that the artifactId value is ad.
     //noinspection UseTomlInstead
