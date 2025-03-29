@@ -56,7 +56,7 @@ public class GodotTranssion extends GodotPlugin  {
     @Override
     public View onMainCreate(Activity activity) {
         mActivity = getActivity();
-        init();
+//        init();
 
         return super.onMainCreate(activity);
     }
@@ -217,26 +217,29 @@ public class GodotTranssion extends GodotPlugin  {
     @UsedByGodot
     public void setBannerLocation(final String location)
     {
-        //Developers can pass in the layout parameters when loading the ad.
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mTGBannerView.load(mActivity,true,layoutParams);
+        mActivity.runOnUiThread(() -> {
+            //Developers can pass in the layout parameters when loading the ad.
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mTGBannerView.load(mActivity,true,layoutParams);
 
-        //If developers want to adjust the layout, they can obtain the layout configuration in TGBannerView and set the layout again.
-        FrameLayout.LayoutParams configLayoutParamsInfo = mTGBannerView.getConfigLayoutParamsInfo();
-        //Display the banner ad at the top.
-        if (Objects.equals(location, "TOP"))
-            configLayoutParamsInfo.gravity = Gravity.TOP;
-        else if (Objects.equals(location, "BOTTOM")) {
-            configLayoutParamsInfo.gravity = Gravity.BOTTOM;
-        }
-        //The banner width has been set to 400px. Note: Ad display may fail if the width value is too small. It is recommended that you check the effect in a formal environment.
-        //Note: The unit is px, and you may need to convert between dp and px depending on the device with different pixel densities.
-        configLayoutParamsInfo.width = 400;
-        mTGBannerView.load(mActivity);
+            //If developers want to adjust the layout, they can obtain the layout configuration in TGBannerView and set the layout again.
+            FrameLayout.LayoutParams configLayoutParamsInfo = mTGBannerView.getConfigLayoutParamsInfo();
+            //Display the banner ad at the top.
+            if (Objects.equals(location, "TOP"))
+                configLayoutParamsInfo.gravity = Gravity.TOP;
+            else if (Objects.equals(location, "BOTTOM")) {
+                configLayoutParamsInfo.gravity = Gravity.BOTTOM;
+            }
+            //The banner width has been set to 400px. Note: Ad display may fail if the width value is too small. It is recommended that you check the effect in a formal environment.
+            //Note: The unit is px, and you may need to convert between dp and px depending on the device with different pixel densities.
+            configLayoutParamsInfo.width = 400;
+            mTGBannerView.load(mActivity);
 
-        //Developers can call the method below to add TGBannerView to their own containers.
-        //When this method is called, the ad will not be automatically added to the root layout of the interface. Developers need to perform other configurations to display the ad.
-        //mTGBannerView.load(this,false);
+            //Developers can call the method below to add TGBannerView to their own containers.
+            //When this method is called, the ad will not be automatically added to the root layout of the interface. Developers need to perform other configurations to display the ad.
+            //mTGBannerView.load(this,false);
+        });
+
     }
 
     @UsedByGodot
