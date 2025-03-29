@@ -55,7 +55,7 @@ public class GodotTranssion extends GodotPlugin  {
     @Nullable
     @Override
     public View onMainCreate(Activity activity) {
-        mActivity = getActivity();
+        mActivity = activity;
 //        init();
 
         return super.onMainCreate(activity);
@@ -105,6 +105,7 @@ public class GodotTranssion extends GodotPlugin  {
         return signals;
     }
 
+    
     @UsedByGodot
     public void init(){
         mActivity.runOnUiThread(() -> {
